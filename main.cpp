@@ -9,9 +9,10 @@
 
 using std::string;
 
+
 int main() {
-
-
+    Banking myAccount;
+    myAccount.promptUserData();
 
 
 

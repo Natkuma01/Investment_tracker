@@ -27,27 +27,27 @@ void Banking::setNumYears(int numYears) {
     NumYears = numYears;
 }
 
-double Banking::getInitialInvestment() {
+double Banking::getInitialInvestment() const {
     return InitialInvestment;
 }
 
-double Banking::getMonthlyDeposit() {
+double Banking::getMonthlyDeposit() const {
     return MonthlyDeposit;
 }
 
-double Banking::getAnnualInterest() {
+double Banking::getAnnualInterest() const {
     return AnnualInterest;
 }
 
-double Banking::getNumYears() {
+int Banking::getNumYears() const {
     return NumYears;
 }
 
 
-void promptUserData(Banking& banking) {
+void Banking::promptUserData(Banking& banking) {
     double initialInvestment;
     double monthlyDeposit;
-    double annualInterestl
+    double annualInterest;
     int numYears;
 
     std::cout << "******************************" << std::endl;
@@ -71,12 +71,13 @@ void promptUserData(Banking& banking) {
 
     std::cout << "Press Enter to continue..." << std::endl;
     std:: cin.get();
+
 }
 
-void displayUserData(Banking& banking) {
+void Banking::displayUserData(Banking& banking) {
     std::cout << "******************************" << std::endl;
     std::cout << "********* Data Input *********" << std::endl;
 
-    std::cout << "Inital Investment Amount: " << getInitialInvestment() << std::endl;
-    
+    std::cout << "Inital Investment Amount: " << banking.getInitialInvestment() << std::endl;
+
 }

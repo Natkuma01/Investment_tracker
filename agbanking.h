@@ -17,16 +17,18 @@ class Banking {
     public:
       Banking();
 
-      void Banking::setInitialInvestment(double);
-      void Banking::setMonthlyDeposit(double);
-      void Banking::setAnnualInterest(double);
-      void Banking::setNumYears(int);
+      void setInitialInvestment(double);
+      void setMonthlyDeposit(double);
+      void setAnnualInterest(double);
+      void setNumYears(int);
 
       double getInitialInvestment() const;
       double getMonthlyDeposit() const;
       double getAnnualInterest() const;
       int getNumYears() const;
-        
+ 
+      void promptUserData();
+      void displayUserData();
 };
 
 
