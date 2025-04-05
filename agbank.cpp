@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
-#include "agbanking.h"
+#include <limits>
+#include "agbanking.hpp"
 
 using std::string;
 
@@ -44,7 +45,7 @@ int Banking::getNumYears() const {
 }
 
 
-void Banking::promptUserData(Banking& banking) {
+void Banking::promptUserData() {
     double initialInvestment;
     double monthlyDeposit;
     double annualInterest;
@@ -53,31 +54,59 @@ void Banking::promptUserData(Banking& banking) {
     std::cout << "******************************" << std::endl;
     std::cout << "********* Data Input *********" << std::endl;
 
-    std::cout << "Initial Investment Amount: " << std::endl;
-    std:cin >> initialInvestment;
-    banking.setInitialInvestment(initialInvestment);
+    initialInvestment = validateSobbleData<double>("Initial Investment Amout: ");
+    setInitialInvestment(initialInvestment);
 
-    std::cout << "Monthly Deposit: " << std::endl;
-    std: cin >> monthlyDeposit;
-    banking.setMonthlyDeposit(monthlyDeposit);
+    monthlyDeposit = validateSobbleData<double>("Monthly Deposit: ");
+    setMonthlyDeposit(monthlyDeposit);
 
-    std::cout << "Annual Interest: " << std::endl;
-    std: cin >> annualInterest;
-    banking.setAnnualInterest(annualInterest);
+    annualInterest = validateSobbleData<double>("Annual Interest: ");
+    setAnnualInterest(annualInterest);
 
-    std::cout << "Number of years: " << std::endl;
-    std: cin >> numYears;
-    banking.setNumYears(numYears);
+    numYears = validateSobbleData<int>("Number of Years: ");
+    setNumYears(numYears);
 
+    std:: cout << "\n";
     std::cout << "Press Enter to continue..." << std::endl;
-    std:: cin.get();
+    std::cin.get();
 
 }
 
-void Banking::displayUserData(Banking& banking) {
+void Banking::displayUserData() {
     std::cout << "******************************" << std::endl;
     std::cout << "********* Data Input *********" << std::endl;
 
-    std::cout << "Inital Investment Amount: " << banking.getInitialInvestment() << std::endl;
+    std::cout << "Inital Investment Amount: " << getInitialInvestment() << std::endl;
+    std::cout << "Monthly Deposit: " << getMonthlyDeposit() << std::endl;
+    std::cout << "Annual Interest: " << getAnnualInterest() << std::endl;
+    std::cout << "Number of years: " << getNumYears() << std::endl;
 
+    std::cout << "Press any key to continue...." << std::endl;
+}
+
+void clearScreen() {
+    std::cout << "\033[2J\033[1;1H" << std::flush;
+}
+
+template <typename RawData>
+RawData validateSobbleData(const std::string& questionToUser) {
+    RawData input;
+    bool isPositive = false;
+
+    do {
+        std::cout << questionToUser;
+        std::cin >> input;
+
+        if(std::cin.fail() || input < 0) {
+           std::cin.clear();
+           std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+           std::cout << "Invalid input. Please enter a positive number" << std::endl;
+        }
+        else {
+            isPositive = true;
+            break;
+        }
+    } while (!isPositive);
+    return input;
 }

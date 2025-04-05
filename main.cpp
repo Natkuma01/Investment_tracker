@@ -5,7 +5,8 @@
 */
 
 #include <iostream>
-#include "agbanking.h"
+#include "agbanking.hpp"
+
 
 using std::string;
 
@@ -13,6 +14,8 @@ using std::string;
 int main() {
     Banking myAccount;
     myAccount.promptUserData();
+    clearScreen();
+    myAccount.displayUserData();
 
 
 

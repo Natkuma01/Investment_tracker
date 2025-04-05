@@ -4,6 +4,7 @@
 
 using std::string;
 
+
 class Banking {
     private:
         int NumYears;
@@ -31,5 +32,9 @@ class Banking {
       void displayUserData();
 };
 
+template <typename RawData>
+RawData validateSobbleData(const std::string& questionToUser);
+
+void clearScreen();
 
 #endif
