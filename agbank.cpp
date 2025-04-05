@@ -2,10 +2,11 @@
 #include <iomanip>
 #include <sstream>  //for ostringstream
 #include <limits>
+//#include <string>
+//#include <vector>
 #include <cmath>
 #include "agbanking.h"
 
-using std::string;
 
 Banking::Banking() {
     NumYears = 0;
@@ -144,6 +145,7 @@ void Banking::showReport() {
 
 
 void Banking::showReportWithDeposit() {
+    // std::vector<std::string> testing;
     double total = 0.0;
     double monthlyInterestRate = AnnualInterest/12;
     BeginBalance = InitialInvestment;
@@ -168,7 +170,7 @@ void Banking::showReportWithDeposit() {
                   << std::setw(26) << balanceStream.str()
                   << std::setw(28) << interestStream.str()
                   << std::endl;
-
+        
         Interest = 0.0;
     }
     

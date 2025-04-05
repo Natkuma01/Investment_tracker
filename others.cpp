@@ -26,15 +26,15 @@ std::string greeting() {
 }
 
 void printReport() {
-    outFile.open("Report.txt");
+    //outFile.open("Report.txt");
 
-    if(!outFile.is_open()) {
+    //if(!outFile.is_open()) {
         std::cerr << "Unable to print out the report at this moment." << std::endl;
-    }
+    //}
 
     
 
-    outFile.close();
+    //outFile.close();
 
     std::cout << "Your report is successfully export as a text file." << std::endl;
 

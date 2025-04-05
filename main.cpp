@@ -34,17 +34,25 @@ int main() {
     std::cout << "[3] exit the program" << std::endl;
     
     std::cin >> choice;
-    if (std::cin.fail() || choice >2 || choice <=0) {
+    if (std::cin.fail() || choice >3 || choice <=0) {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << "Please enter invalid number.";
         continue;
     }
     if (choice == 2) {
-        myAccount.printReport();
+        //myAccount.printReport();
+    }
+    if (choice ==1) {
+        Banking myAccount;
+        myAccount.promptUserData();
+        std::cout << "\n";
+        myAccount.displayUserData();
+        myAccount.showReport();
+        std::cout << "\n";   
+        myAccount.showReportWithDeposit();
     }
     }
-    
     while (choice != 3);
 
 
