@@ -32,11 +32,14 @@ class Banking {
       void displayUserData();
       void showReport();
       void showReportWithDeposit();
+      void printReport();
 };
 
 template <typename RawData>
 RawData validateSobbleData(const std::string& questionToUser);
 
 void clearScreen();
+
+std::string greeting();
 
 #endif

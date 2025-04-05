@@ -1,8 +1,9 @@
 #include <iostream>
 #include <iomanip>
+#include <sstream>  //for ostringstream
 #include <limits>
 #include <cmath>
-#include "agbanking.hpp"
+#include "agbanking.h"
 
 using std::string;
 
@@ -85,7 +86,7 @@ void Banking::displayUserData() {
     std::cout << "Number of years: $" << getNumYears() << std::endl;
 
     std:: cout << "\n";
-    std::cout << "Press any key to continue...." << std::endl;
+    std::cout << "Press any key to see the analysis" << std::endl;
     std::cin.get();
 }
 
@@ -136,7 +137,7 @@ void Banking::showReport() {
         CloseBalance = InitialInvestment * pow((1+AnnualInterest), year);
         interest = CloseBalance - BeginBalance;
         BeginBalance = CloseBalance;
-        std::cout << "       " << year << "                   " << CloseBalance << "                          " << interest << std::endl;
+        std::cout << std::setw(8) << year << std::setw(20) << "$" << CloseBalance << std::setw(20) << "$" << interest << std::endl;
     }
 }
 
@@ -159,7 +160,15 @@ void Banking::showReportWithDeposit() {
             BeginBalance = CloseBalance;
             Interest += CloseBalance - total;
         }
-        std::cout << "       " << year << "                   " << BeginBalance << "                          " << Interest << std::endl;
+        std::ostringstream balanceStream, interestStream;
+        balanceStream << "$" << std::fixed << std::setprecision(2) << BeginBalance;
+        interestStream << "$" << std::fixed << std::setprecision(2) << Interest;
+
+        std::cout << std::setw(8) << year
+                  << std::setw(26) << balanceStream.str()
+                  << std::setw(28) << interestStream.str()
+                  << std::endl;
+
         Interest = 0.0;
     }
     
