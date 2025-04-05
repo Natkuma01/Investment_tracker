@@ -11,11 +11,15 @@
 using std::string;
 
 
+
 int main() {
     Banking myAccount;
     myAccount.promptUserData();
-    clearScreen();
+    std::cout << "\n";
     myAccount.displayUserData();
+    myAccount.showReport();
+    std::cout << "\n";   
+    myAccount.showReportWithDeposit();
 
 
 

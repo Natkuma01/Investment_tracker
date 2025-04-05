@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <limits>
+#include <cmath>
 #include "agbanking.hpp"
 
 using std::string;
@@ -60,7 +61,7 @@ void Banking::promptUserData() {
     monthlyDeposit = validateSobbleData<double>("Monthly Deposit: ");
     setMonthlyDeposit(monthlyDeposit);
 
-    annualInterest = validateSobbleData<double>("Annual Interest: ");
+    annualInterest = validateSobbleData<double>("Annual Interest (in %): ");
     setAnnualInterest(annualInterest);
 
     numYears = validateSobbleData<int>("Number of Years: ");
@@ -76,18 +77,21 @@ void Banking::displayUserData() {
     std::cout << "******************************" << std::endl;
     std::cout << "********* Data Input *********" << std::endl;
 
-    std::cout << "Inital Investment Amount: " << getInitialInvestment() << std::endl;
-    std::cout << "Monthly Deposit: " << getMonthlyDeposit() << std::endl;
-    std::cout << "Annual Interest: " << getAnnualInterest() << std::endl;
-    std::cout << "Number of years: " << getNumYears() << std::endl;
+    std::cout << "Inital Investment Amount: $" << getInitialInvestment() << std::endl;
+    std::cout << "Monthly Deposit: $" << getMonthlyDeposit() << std::endl;
+    std::cout << "Annual Interest: " << getAnnualInterest() << "%" << std::endl;      
+    std::cout << "Number of years: $" << getNumYears() << std::endl;
 
+    std:: cout << "\n";
     std::cout << "Press any key to continue...." << std::endl;
+    std::cin.get();
 }
 
 void clearScreen() {
     std::cout << "\033[2J\033[1;1H" << std::flush;
 }
 
+// validate the user input are positive integer
 template <typename RawData>
 RawData validateSobbleData(const std::string& questionToUser) {
     RawData input;
@@ -108,5 +112,47 @@ RawData validateSobbleData(const std::string& questionToUser) {
             break;
         }
     } while (!isPositive);
+
     return input;
+}
+
+void Banking::showReport() {
+    double closingBal = 0.0;
+    double interest = 0.0;
+    AnnualInterest = AnnualInterest/100;
+    BeginBalance = InitialInvestment;
+
+    std::cout << std::fixed << std::setprecision(2);
+
+    std::cout << "    Balance and Interest Without Additional Monthly Deposits" << std::endl;
+    std::cout << "=================================================================" << std::endl;
+    std::cout << "     Year            Year End Balance         Year End Earned Interest" << std::endl;
+    std::cout << "------------------------------------------------------------------------" << std::endl;
+
+    for(int i = 1; i <= NumYears; i++) {
+        closingBal = InitialInvestment * pow((1+AnnualInterest), i);
+        interest = closingBal - BeginBalance;
+        BeginBalance = closingBal;
+        std::cout << "       " << i << "                   " << closingBal << "                          " << interest << std::endl;
+    }
+}
+
+
+
+void Banking::showReportWithDeposit() {
+    double closingBal = 0.0;
+    double interest = 0.0;
+    double monthlyRate = AnnualInterest/12;
+    AnnualInterest = AnnualInterest/100;
+
+    std::cout << "    Balance and Interest Without Additional Monthly Deposits" << std::endl;
+    std::cout << "=================================================================" << std::endl;
+    std::cout << "     Year            Year End Balance         Year End Earned Interest" << std::endl;
+    std::cout << "------------------------------------------------------------------------" << std::endl;
+
+    for(int i = 1; i <= NumYears; i++) {
+        
+        interest = InitialInvestment*AnnualInterest;
+        std::cout << "       " << i << "                   " << closingBal << "                          " << interest << std::endl;
+    }
 }

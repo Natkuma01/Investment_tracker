@@ -30,6 +30,8 @@ class Banking {
  
       void promptUserData();
       void displayUserData();
+      void showReport();
+      void showReportWithDeposit();
 };
 
 template <typename RawData>
