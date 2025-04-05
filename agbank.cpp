@@ -77,9 +77,11 @@ void Banking::displayUserData() {
     std::cout << "******************************" << std::endl;
     std::cout << "********* Data Input *********" << std::endl;
 
+    std::cout << std::fixed << std::setprecision(2);
+
     std::cout << "Inital Investment Amount: $" << getInitialInvestment() << std::endl;
     std::cout << "Monthly Deposit: $" << getMonthlyDeposit() << std::endl;
-    std::cout << "Annual Interest: " << getAnnualInterest() << "%" << std::endl;      
+    std::cout << "Annual Interest: " << std::fixed << std::setprecision(0) << getAnnualInterest() << "%" << std::endl;      
     std::cout << "Number of years: $" << getNumYears() << std::endl;
 
     std:: cout << "\n";
@@ -117,10 +119,11 @@ RawData validateSobbleData(const std::string& questionToUser) {
 }
 
 void Banking::showReport() {
-    double closingBal = 0.0;
+    double CloseBalance = 0.0;
     double interest = 0.0;
-    AnnualInterest = AnnualInterest/100;
+    AnnualInterest = AnnualInterest/100;        // set private variable become decimal from now on
     BeginBalance = InitialInvestment;
+    // need to set decimal
 
     std::cout << std::fixed << std::setprecision(2);
 
@@ -129,30 +132,35 @@ void Banking::showReport() {
     std::cout << "     Year            Year End Balance         Year End Earned Interest" << std::endl;
     std::cout << "------------------------------------------------------------------------" << std::endl;
 
-    for(int i = 1; i <= NumYears; i++) {
-        closingBal = InitialInvestment * pow((1+AnnualInterest), i);
-        interest = closingBal - BeginBalance;
-        BeginBalance = closingBal;
-        std::cout << "       " << i << "                   " << closingBal << "                          " << interest << std::endl;
+    for(int year = 1; year <= NumYears; year++) {
+        CloseBalance = InitialInvestment * pow((1+AnnualInterest), year);
+        interest = CloseBalance - BeginBalance;
+        BeginBalance = CloseBalance;
+        std::cout << "       " << year << "                   " << CloseBalance << "                          " << interest << std::endl;
     }
 }
 
 
 
 void Banking::showReportWithDeposit() {
-    double closingBal = 0.0;
-    double interest = 0.0;
-    double monthlyRate = AnnualInterest/12;
-    AnnualInterest = AnnualInterest/100;
-
-    std::cout << "    Balance and Interest Without Additional Monthly Deposits" << std::endl;
+    double total = 0.0;
+    double monthlyInterestRate = AnnualInterest/12;
+    BeginBalance = InitialInvestment;
+    
+    std::cout << "    Balance and Interest With Additional Monthly Deposits" << std::endl;
     std::cout << "=================================================================" << std::endl;
     std::cout << "     Year            Year End Balance         Year End Earned Interest" << std::endl;
     std::cout << "------------------------------------------------------------------------" << std::endl;
 
-    for(int i = 1; i <= NumYears; i++) {
-        
-        interest = InitialInvestment*AnnualInterest;
-        std::cout << "       " << i << "                   " << closingBal << "                          " << interest << std::endl;
+    for(int year = 1; year <= NumYears; year++) {
+        for (int month = 1; month <= 12; month++) {
+            total = BeginBalance + MonthlyDeposit;
+            CloseBalance = total * (1 + monthlyInterestRate);
+            BeginBalance = CloseBalance;
+            Interest += CloseBalance - total;
+        }
+        std::cout << "       " << year << "                   " << BeginBalance << "                          " << Interest << std::endl;
+        Interest = 0.0;
     }
+    
 }
