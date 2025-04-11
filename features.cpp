@@ -7,18 +7,17 @@
 
 // return a time-based greeting message based on the current hour
 std::string greeting() {
-    int currHour;       // declare variable to store user current time 
+    int currHour;        
 
     // get the current time as a time_t object
     std::time_t now = std::time(0);     
     // convert the time_t value to local time and return a pointer to a tm structure wuth hr,min,day
     std::tm localTime;
     
-    localtime_r(&now, &localTime);      
+    localtime_r(&now, &localTime);      // for window user -> localtime_s(), this is for thread-safe purpose 
 
     currHour = localTime.tm_hour;      // extract current hour in 24 hour format
 
-    // define greeting statment based on current hour
     if (currHour >=3 && currHour <=11) {
         return "Good Morning! \nWelcome to AireGead Banking.";
     }
@@ -37,13 +36,11 @@ void printReport(const std::string& filename, const std::vector<std::string>& li
     std::ofstream outFile;
     outFile.open("Report.txt");     // open and create the file
 
-    // check if file opened sucessfully
     if(!outFile.is_open()) {
         std::cerr << "Unable to print out the report at this moment." << std::endl;
         return;
     }
 
-    // hardcode these lines into the Report.txt file
     outFile << "    Balance and Interest With Additional Monthly Deposits" << std::endl;
     outFile << "=================================================================" << std::endl;
     outFile << "     Year            Year End Balance         Year End Earned Interest" << std::endl;
@@ -57,7 +54,6 @@ void printReport(const std::string& filename, const std::vector<std::string>& li
         outFile << line << std::endl;
     }
 
-    // close the file after writing is completed
     outFile.close();
 
     std::cout << "Your report is successfully export as a text file." << std::endl;
