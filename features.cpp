@@ -12,9 +12,11 @@ std::string greeting() {
     // get the current time as a time_t object
     std::time_t now = std::time(0);     
     // convert the time_t value to local time and return a pointer to a tm structure wuth hr,min,day
-    std::tm *localTime = std::localtime(&now);      
+    std::tm localTime;
+    
+    localtime_r(&now, &localTime);      
 
-    currHour = localTime->tm_hour;      // extract current hour in 24 hour format
+    currHour = localTime.tm_hour;      // extract current hour in 24 hour format
 
     // define greeting statment based on current hour
     if (currHour >=3 && currHour <=11) {
